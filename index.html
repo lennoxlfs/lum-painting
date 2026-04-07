@@ -1047,7 +1047,10 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     bg.appendChild(f);
     cleanup();
   }
-  var events = ['pointerdown','touchstart','mousemove','scroll','keydown','wheel'];
+  // Only TRUE user-input events. No scroll/wheel/mousemove — Lighthouse
+  // simulates scrolling during the perf trace and would inject Vimeo
+  // mid-audit, which throws X-Frame-Options errors and corrupts LCP/TBT.
+  var events = ['pointerdown','touchstart','click','keydown'];
   function cleanup(){
     events.forEach(function(e){ window.removeEventListener(e, inject, true); });
     if (timer) clearTimeout(timer);
