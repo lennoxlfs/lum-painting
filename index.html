@@ -18,7 +18,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -48,9 +48,9 @@
   --line:#E8E2D6;
   --muted:#6B6660;
   --text:#1F2433;
-  --accent:#C8531C;
-  --accent-2:#A8431A;
-  --gold:#C9A24A;
+  --accent:#28A5FE;
+  --accent-2:#1A8FE5;
+  --gold:#7DD0FF;
   --shadow:0 24px 70px -32px rgba(15,27,45,.4);
   --radius:14px;
   --max:1280px;
@@ -69,8 +69,8 @@ body{
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;color:var(--ink);font-weight:600;letter-spacing:-.015em;line-height:1.08;margin:0 0 .5em}
-h1{font-size:clamp(2.6rem,6.5vw,5.4rem);font-weight:500}
+h1,h2,h3,h4{font-family:'Space Grotesk','Inter',system-ui,sans-serif;color:var(--ink);font-weight:600;letter-spacing:-.025em;line-height:1.05;margin:0 0 .5em}
+h1{font-size:clamp(2.6rem,6.5vw,5.4rem);font-weight:600;letter-spacing:-.035em}
 h2{font-size:clamp(2rem,4vw,3.2rem)}
 h3{font-size:1.4rem}
 p{margin:0 0 1em}
@@ -85,7 +85,7 @@ p{margin:0 0 1em}
   background:var(--accent);color:#fff;font-weight:600;
   padding:16px 28px;border-radius:999px;border:none;cursor:pointer;
   font-size:.96rem;transition:transform .25s,background .25s,box-shadow .25s;
-  box-shadow:0 14px 30px -12px rgba(200,83,28,.55);
+  box-shadow:0 14px 30px -12px rgba(40,165,254,.55);
   letter-spacing:.01em;
 }
 .btn:hover{background:var(--accent-2);transform:translateY(-2px)}
@@ -111,22 +111,15 @@ header.scrolled{
   -webkit-backdrop-filter:saturate(150%) blur(16px);
   border-bottom-color:rgba(15,27,45,.08);
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:88px;transition:height .3s}
-header.scrolled .nav{height:74px}
-.brand{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:108px;transition:height .3s}
+header.scrolled .nav{height:88px}
+.brand{display:flex;align-items:center;color:var(--ink)}
 .brand-logo{
-  height:54px;width:auto;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  height:84px;width:auto;
+  filter:drop-shadow(0 4px 14px rgba(0,0,0,.35));
   transition:filter .3s,height .3s;
 }
-header.scrolled .brand-logo{height:46px;filter:none}
-.brand-text{
-  font-family:'Fraunces',serif;font-weight:600;font-size:1.45rem;
-  color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45);
-  transition:color .3s,text-shadow .3s;
-  letter-spacing:-.01em;
-}
-header.scrolled .brand-text{color:var(--ink);text-shadow:none}
+header.scrolled .brand-logo{height:64px;filter:none}
 .nav-links{display:flex;gap:38px;align-items:center}
 .nav-links a{
   color:#fff;font-weight:500;font-size:.96rem;
@@ -156,16 +149,15 @@ header.scrolled .menu-btn{color:var(--ink)}
   overflow:hidden;color:#fff;display:flex;align-items:center;
 }
 .hero-bg{
-  position:absolute;inset:0;
-  background-image:url('https://i.vimeocdn.com/video/1975692414-702cf750c9b5b07096cbb57b51db20ef505f759ec4d4f9c57e4bad9083bf8a13-d');
-  background-size:cover;background-position:center 30%;
-  transform:scale(1.08);
-  animation:kenBurns 22s ease-in-out infinite alternate;
-  will-change:transform;
+  position:absolute;inset:0;overflow:hidden;
+  background:#0E1726 url('https://i.vimeocdn.com/video/1975692414-702cf750c9b5b07096cbb57b51db20ef505f759ec4d4f9c57e4bad9083bf8a13-d_1920x1080?&r=pad&region=us') center 30%/cover no-repeat;
 }
-@keyframes kenBurns{
-  from{transform:scale(1.08) translate(0,0)}
-  to{transform:scale(1.18) translate(-1.5%,-1%)}
+.hero-bg iframe{
+  position:absolute;top:50%;left:50%;
+  width:100vw;height:56.25vw; /* 16:9 */
+  min-height:100vh;min-width:177.78vh;
+  transform:translate(-50%,-50%);
+  border:0;pointer-events:none;
 }
 .hero-bg::after{
   content:"";position:absolute;inset:0;
@@ -278,7 +270,7 @@ section{padding:120px 0;position:relative}
 .about p strong{color:var(--ink);font-weight:600}
 .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
 .stat{padding:24px 18px;background:var(--bg);border:1px solid var(--line);border-radius:12px;text-align:center}
-.stat .num{font-family:'Fraunces',serif;font-size:2.1rem;color:var(--ink);font-weight:600;line-height:1}
+.stat .num{font-family:'Space Grotesk','Inter',sans-serif;font-size:2.1rem;color:var(--ink);font-weight:600;line-height:1}
 .stat .lbl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:6px}
 
 /* SERVICES */
@@ -300,7 +292,7 @@ section{padding:120px 0;position:relative}
 .service:hover::before{transform:scaleX(1)}
 .service .icon{
   width:58px;height:58px;border-radius:14px;
-  background:rgba(200,83,28,.10);color:var(--accent);
+  background:rgba(40,165,254,.10);color:var(--accent);
   display:grid;place-items:center;margin-bottom:24px;
 }
 .service .icon svg{width:30px;height:30px}
@@ -370,7 +362,7 @@ section{padding:120px 0;position:relative}
 #reviews::before{
   content:"";position:absolute;inset:0;
   background:
-    radial-gradient(50% 60% at 80% 20%, rgba(200,83,28,.18), transparent 60%),
+    radial-gradient(50% 60% at 80% 20%, rgba(40,165,254,.18), transparent 60%),
     radial-gradient(40% 50% at 10% 80%, rgba(201,162,74,.10), transparent 60%);
   pointer-events:none;
 }
@@ -388,7 +380,7 @@ section{padding:120px 0;position:relative}
 .review:hover{transform:translateY(-4px);background:rgba(255,255,255,.06)}
 .review .quote-mark{
   position:absolute;top:18px;right:24px;
-  font-family:'Fraunces',serif;font-size:5rem;color:var(--accent);
+  font-family:'Space Grotesk','Inter',sans-serif;font-size:5rem;color:var(--accent);
   opacity:.18;line-height:1;
 }
 .stars{display:flex;gap:3px;margin-bottom:16px;color:var(--gold);position:relative}
@@ -399,7 +391,7 @@ section{padding:120px 0;position:relative}
   width:46px;height:46px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent),var(--gold));
   display:grid;place-items:center;color:#fff;font-weight:600;
-  font-family:'Fraunces',serif;font-size:1.15rem;
+  font-family:'Space Grotesk','Inter',sans-serif;font-size:1.15rem;
 }
 .review .name{font-weight:600;color:#fff;font-size:.96rem;line-height:1.2}
 .review .src{font-size:.78rem;color:#A8B0BD;margin-top:3px}
@@ -428,7 +420,7 @@ section{padding:120px 0;position:relative}
 }
 .contact-card::before{
   content:"";position:absolute;inset:0;
-  background:radial-gradient(50% 60% at 80% 20%, rgba(200,83,28,.18), transparent 60%);
+  background:radial-gradient(50% 60% at 80% 20%, rgba(40,165,254,.18), transparent 60%);
   pointer-events:none;
 }
 .contact-card > *{position:relative;z-index:1}
@@ -438,7 +430,7 @@ section{padding:120px 0;position:relative}
 .cinfo{display:flex;gap:16px;align-items:flex-start}
 .cinfo .ico{
   width:46px;height:46px;border-radius:12px;
-  background:rgba(200,83,28,.18);color:var(--accent);
+  background:rgba(40,165,254,.18);color:var(--accent);
   display:grid;place-items:center;flex-shrink:0;
 }
 .cinfo .ico svg{width:20px;height:20px}
@@ -460,7 +452,7 @@ section{padding:120px 0;position:relative}
 }
 .field input:focus,.field textarea:focus,.field select:focus{
   outline:none;border-color:var(--accent);background:#fff;
-  box-shadow:0 0 0 4px rgba(200,83,28,.08);
+  box-shadow:0 0 0 4px rgba(40,165,254,.08);
 }
 .field textarea{min-height:120px;resize:vertical}
 .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -477,7 +469,7 @@ footer{
 .foot-grid a:hover{color:var(--accent)}
 .foot-brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .foot-brand img{height:48px;width:auto}
-.foot-brand-text{font-family:'Fraunces',serif;color:#fff;font-size:1.3rem;font-weight:600}
+.foot-brand-text{font-family:'Space Grotesk','Inter',sans-serif;color:#fff;font-size:1.3rem;font-weight:600}
 .foot-bot{
   border-top:1px solid rgba(255,255,255,.08);padding-top:26px;
   display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.84rem;
@@ -516,7 +508,7 @@ footer{
     box-shadow:0 20px 40px -20px rgba(0,0,0,.2);
   }
   .nav-links.open{transform:translateX(0)}
-  .nav-links a{color:var(--ink);text-shadow:none;font-size:1.4rem;font-family:'Fraunces',serif}
+  .nav-links a{color:var(--ink);text-shadow:none;font-size:1.4rem;font-family:'Space Grotesk','Inter',sans-serif}
   .menu-btn{display:grid;place-items:center;z-index:60;position:relative}
   .phone-link span.txt{display:none}
   .nav-cta .btn{display:none}
@@ -541,8 +533,7 @@ footer{
 <header id="header">
   <div class="container nav">
     <a href="#top" class="brand">
-      <img class="brand-logo" src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=h:120,cg:true,m/qt=q:95" alt="Lum Painting logo">
-      <span class="brand-text">Lum Painting</span>
+      <img class="brand-logo" src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=h:200,cg:true,m/qt=q:95" alt="Lum Painting">
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
@@ -568,7 +559,9 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg">
+    <iframe src="https://player.vimeo.com/video/1050975241?h=2950c131aa&background=1&autoplay=1&loop=1&autopause=0&muted=1&title=0&byline=0&portrait=0&controls=0&playsinline=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
   <div class="hero-content">
     <div class="container">
       <span class="hero-eyebrow"><span class="dot"></span>Chagrin Falls · Northeast Ohio</span>
