@@ -918,7 +918,17 @@ footer{
       </div>
     </div>
 
-    <form class="contact-form reveal delay-1" id="quoteForm" onsubmit="event.preventDefault();handleQuote(this);">
+    <form class="contact-form reveal delay-1" id="quoteForm"
+          action="https://formsubmit.co/garrettlumpainting@gmail.com"
+          method="POST">
+      <!-- Formsubmit configuration -->
+      <input type="hidden" name="_subject" value="New Quote Request — Lum Painting">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://lum-painting.vercel.app/?sent=1#contact">
+      <input type="hidden" name="_autoresponse" value="Thanks for reaching out to Lum Painting! We received your quote request and Garrett will be in touch shortly. — Lum Painting, Chagrin Falls, OH">
+      <!-- Honeypot anti-spam -->
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <h3>Get a Free Quote</h3>
       <p class="sub">Tell us a bit about your project and we'll be in touch quickly.</p>
       <div class="row-2">
@@ -1197,19 +1207,17 @@ window.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % grid.children.length; showLb(); }
 });
 
-// quote form
-function handleQuote(form){
-  const data = new FormData(form);
-  const subject = encodeURIComponent("Free Quote Request — " + (data.get('name') || ''));
-  const body = encodeURIComponent(
-    "Name: " + (data.get('name') || '') + "\n" +
-    "Phone: " + (data.get('phone') || '') + "\n" +
-    "Email: " + (data.get('email') || '') + "\n" +
-    "Address: " + (data.get('address') || '') + "\n" +
-    "Service: " + (data.get('service') || '') + "\n\n" +
-    "Details:\n" + (data.get('details') || '')
-  );
-  window.location.href = "mailto:lumpainting@gmail.com?subject=" + subject + "&body=" + body;
+// quote form: posts directly to Formsubmit.co (see action attr on the form)
+
+// If the visitor was just redirected back from a successful submission,
+// scroll to the contact section and show a confirmation banner.
+if (new URLSearchParams(location.search).get('sent') === '1') {
+  const note = document.createElement('div');
+  note.textContent = "Thanks! Your quote request was sent. Garrett will be in touch soon.";
+  note.style.cssText = "position:fixed;top:90px;left:50%;transform:translateX(-50%);background:#0F66B8;color:#fff;padding:14px 24px;border-radius:999px;font-weight:600;box-shadow:0 14px 30px -12px rgba(15,102,184,.55);z-index:200;font-family:'Inter',sans-serif;font-size:.95rem;max-width:90vw;text-align:center";
+  document.body.appendChild(note);
+  setTimeout(() => { note.style.transition = 'opacity .4s'; note.style.opacity = '0'; }, 5000);
+  setTimeout(() => note.remove(), 5500);
 }
 </script>
 </body>
