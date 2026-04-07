@@ -6,6 +6,12 @@
 <title>Lum Painting | Painters in Chagrin Falls & Northeast Ohio</title>
 <meta name="description" content="Family-owned painting company in Chagrin Falls, OH. Interior & exterior painting, deck staining and repair, siding & trim repair, and pressure washing. Free estimates from Garrett & Warren Lum." />
 <meta name="theme-color" content="#0F1B2D" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="dns-prefetch" href="https://player.vimeo.com" />
+<link rel="dns-prefetch" href="https://i.vimeocdn.com" />
+<link rel="dns-prefetch" href="https://img1.wsimg.com" />
+<link rel="preconnect" href="https://img1.wsimg.com" crossorigin />
 <link rel="canonical" href="https://lumpainting.com/" />
 
 <meta property="og:type" content="website" />
@@ -25,7 +31,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap"></noscript>
 
 <script type="application/ld+json">
 {
@@ -64,6 +72,14 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.btn:focus-visible,a.btn:focus-visible{outline-offset:4px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;scroll-behavior:auto !important;
+  }
+}
 body{
   margin:0;
   font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
@@ -171,7 +187,7 @@ header.scrolled .menu-btn{color:var(--ink)}
 }
 .hero-bg{
   position:absolute;inset:0;overflow:hidden;
-  background:#0E1726;
+  background:#0E1726 center/cover no-repeat;
 }
 /* The Vimeo source is a vertical 9:16 clip. We size the iframe to always
    cover the hero box: width is the larger of 100vw or (100dvh * 9/16),
@@ -624,7 +640,7 @@ footer{
 <header id="header">
   <div class="container nav">
     <a href="#top" class="brand">
-      <img class="brand-logo" src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=h:200,cg:true,m/qt=q:95" alt="Lum Painting">
+      <img class="brand-logo" src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=h:288,cg:true,m/qt=q:90" alt="Lum Painting" width="288" height="144" fetchpriority="high" decoding="async">
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
@@ -634,12 +650,12 @@ footer{
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta">
-      <a href="tel:+14405918374" class="phone-link">
+      <a href="tel:+14405918374" class="phone-link" aria-label="Call Lum Painting at (440) 591-8374">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span class="txt">(440) 591-8374</span>
       </a>
       <a href="#contact" class="btn" style="padding:12px 22px;font-size:.88rem">Free Estimate</a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
       </button>
     </div>
@@ -651,9 +667,7 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <iframe src="https://player.vimeo.com/video/1050975241?h=2950c131aa&background=1&autoplay=1&loop=1&autopause=0&muted=1&title=0&byline=0&portrait=0&controls=0&playsinline=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
-  </div>
+  <div class="hero-bg" id="heroBg" data-video="https://player.vimeo.com/video/1050975241?h=2950c131aa&background=1&autoplay=1&loop=1&autopause=0&muted=1&title=0&byline=0&portrait=0&controls=0&playsinline=1"></div>
   <div class="hero-content">
     <div class="container">
       <span class="hero-eyebrow"><span class="dot"></span>Chagrin Falls · Northeast Ohio</span>
@@ -687,8 +701,8 @@ footer{
 <section id="about">
   <div class="container about-grid">
     <div class="about-img-wrap reveal">
-      <div class="about-img"><img src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/72666C2B-D417-4B3E-9421-E89F7B28F050.png/:/rs=w:900,cg:true,m" alt="A Lum Painting project"></div>
-      <div class="about-img-2"><img src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/F5440DFE-89F3-4D8D-B9E7-B136F0B9BDE0.png/:/rs=w:600,cg:true,m" alt="Lum Painting crew at work"></div>
+      <div class="about-img"><img src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/72666C2B-D417-4B3E-9421-E89F7B28F050.png/:/rs=w:800,cg:true,m/qt=q:85" alt="A Lum Painting project" width="800" height="1000" loading="lazy" decoding="async"></div>
+      <div class="about-img-2"><img src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/F5440DFE-89F3-4D8D-B9E7-B136F0B9BDE0.png/:/rs=w:500,cg:true,m/qt=q:85" alt="Lum Painting crew at work" width="500" height="625" loading="lazy" decoding="async"></div>
     </div>
     <div class="reveal delay-1">
       <span class="eyebrow">About Lum Painting</span>
@@ -953,7 +967,7 @@ footer{
     <div class="foot-grid">
       <div>
         <div class="foot-brand">
-          <img src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=h:120,cg:true,m/qt=q:95" alt="Lum Painting logo">
+          <img src="https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=h:96,cg:true,m/qt=q:90" alt="Lum Painting logo" width="96" height="48" loading="lazy" decoding="async">
           <span class="foot-brand-text">Lum Painting</span>
         </div>
         <p>Family-owned painting and exterior services in Chagrin Falls, OH. Built on craftsmanship, communication, and care.</p>
@@ -1007,6 +1021,31 @@ footer{
 // year
 document.getElementById('yr').textContent = new Date().getFullYear();
 
+// Defer the Vimeo background iframe until after first paint so it doesn't
+// block LCP / FCP. The static dark background on .hero-bg acts as the LCP
+// element while the (heavy) Vimeo player loads in the background.
+(function(){
+  var bg = document.getElementById('heroBg');
+  if (!bg) return;
+  var src = bg.dataset.video;
+  function inject(){
+    if (bg.querySelector('iframe')) return;
+    var f = document.createElement('iframe');
+    f.src = src;
+    f.title = 'Lum Painting deck staining background video';
+    f.setAttribute('allow', 'autoplay; fullscreen');
+    f.setAttribute('allowfullscreen', '');
+    f.setAttribute('aria-hidden', 'true');
+    f.setAttribute('tabindex', '-1');
+    bg.appendChild(f);
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(inject, { timeout: 2500 });
+  } else {
+    window.addEventListener('load', function(){ setTimeout(inject, 600); });
+  }
+})();
+
 // header scrolled state
 const hdr = document.getElementById('header');
 const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 60);
@@ -1022,6 +1061,8 @@ function setMenu(open){
   nbd.classList.toggle('open', open);
   document.body.classList.toggle('menu-open', open);
   document.body.style.overflow = open ? 'hidden' : '';
+  mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+  mb.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 }
 mb.addEventListener('click', () => setMenu(!nl.classList.contains('open')));
 nbd.addEventListener('click', () => setMenu(false));
@@ -1040,7 +1081,7 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 // projects (each is already a before/after composite)
 const base = "https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/";
-const sized = (id, w=900) => `${base}${id}/:/rs=w:${w},cg:true,m`;
+const sized = (id, w=560) => `${base}${id}/:/rs=w:${w},cg:true,m/qt=q:82`;
 const projects = [
   { id: "6A8F8199-087D-4051-A6ED-800C483B8186.png", title: "Interior Refresh",      tag: "Interior",    sub: "Skylight & ceiling repaint" },
   { id: "CB58508D-D2F3-4524-ACF1-365571DD4A4D.png", title: "Cabinet Transformation",tag: "Cabinets",    sub: "Oak refinished to clean white" },
@@ -1067,7 +1108,7 @@ projects.forEach((p, i) => {
   el.innerHTML = `
     <div class="project-img">
       <span class="project-tag">${p.tag}</span>
-      <img loading="lazy" src="${sized(p.id, 900)}" alt="${p.title} — before and after" data-full="${sized(p.id, 1600)}">
+      <img loading="lazy" decoding="async" width="560" height="700" src="${sized(p.id, 560)}" alt="${p.title} — before and after" data-full="${sized(p.id, 1400)}">
     </div>
     <div class="project-meta">
       <h3>${p.title}</h3>
