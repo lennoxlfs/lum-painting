@@ -568,7 +568,10 @@ footer{
   .foot-grid{grid-template-columns:1fr 1fr;gap:30px}
   section{padding:84px 0}
   .section-head{margin-bottom:48px}
-  /* mobile menu — solid panel + dim backdrop so contents are clearly readable */
+  /* mobile menu — solid panel + dim backdrop so contents are clearly readable.
+     Backdrop sits BELOW the header (z-index 49) so it dims the page but the
+     menu drawer, which lives inside the header's stacking context, stays on
+     top and remains fully visible. */
   .nav-backdrop{
     position:fixed;inset:0;
     background:rgba(8,12,22,.55);
@@ -576,7 +579,7 @@ footer{
     -webkit-backdrop-filter:blur(6px);
     opacity:0;pointer-events:none;
     transition:opacity .3s ease;
-    z-index:54;
+    z-index:49;
   }
   .nav-backdrop.open{opacity:1;pointer-events:auto}
   .nav-links{
