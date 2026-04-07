@@ -342,11 +342,38 @@ section{padding:120px 0;position:relative}
 .service h3{margin-bottom:10px;font-size:1.2rem}
 .service p{color:var(--muted);font-size:.95rem;margin:0}
 
-/* PROJECT GALLERY */
-#projects{background:var(--bg-2)}
+/* PROJECT GALLERY — horizontal swipe rail */
+#projects{background:var(--bg-2);overflow:hidden}
 .projects-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  display:flex;gap:24px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:8px 28px 28px;
+  margin:0 calc(50% - 50vw);
+  scrollbar-width:none;
 }
+.projects-grid::-webkit-scrollbar{display:none}
+.projects-grid .project{
+  flex:0 0 min(420px, 82vw);
+  scroll-snap-align:center;
+}
+.projects-grid .project:first-child{margin-left:max(28px, calc(50vw - 210px))}
+.projects-grid .project:last-child{margin-right:max(28px, calc(50vw - 210px))}
+.projects-controls{
+  display:flex;justify-content:center;align-items:center;
+  gap:14px;margin-top:30px;
+}
+.projects-controls button{
+  width:52px;height:52px;border-radius:50%;
+  border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);cursor:pointer;
+  display:grid;place-items:center;
+  transition:background .2s,color .2s,transform .2s;
+}
+.projects-controls button:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+.projects-controls svg{width:22px;height:22px}
 .project{
   border-radius:var(--radius);overflow:hidden;
   background:var(--bg);border:1px solid var(--line);
@@ -530,7 +557,6 @@ footer{
 /* MOBILE */
 @media (max-width:1024px){
   .services-grid{grid-template-columns:repeat(2,1fr)}
-  .projects-grid{grid-template-columns:repeat(2,1fr)}
   .reviews-grid{grid-template-columns:1fr;max-width:600px;margin:0 auto}
 }
 @media (max-width:880px){
@@ -542,24 +568,43 @@ footer{
   .foot-grid{grid-template-columns:1fr 1fr;gap:30px}
   section{padding:84px 0}
   .section-head{margin-bottom:48px}
+  /* mobile menu — solid panel + dim backdrop so contents are clearly readable */
+  .nav-backdrop{
+    position:fixed;inset:0;
+    background:rgba(8,12,22,.55);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;
+    transition:opacity .3s ease;
+    z-index:54;
+  }
+  .nav-backdrop.open{opacity:1;pointer-events:auto}
   .nav-links{
-    position:fixed;top:0;left:0;right:0;bottom:0;
+    position:fixed;top:0;right:0;bottom:0;
+    width:min(82vw,360px);
     background:var(--bg-2);
     flex-direction:column;align-items:flex-start;
-    padding:120px 32px 32px;gap:24px;
+    padding:130px 36px 40px;gap:28px;
     transform:translateX(110%);transition:transform .35s ease;
-    box-shadow:0 20px 40px -20px rgba(0,0,0,.2);
+    box-shadow:-20px 0 50px -20px rgba(0,0,0,.35);
+    z-index:55;
   }
   .nav-links.open{transform:translateX(0)}
-  .nav-links a{color:var(--ink);text-shadow:none;font-size:1.4rem;font-family:'Space Grotesk','Inter',sans-serif}
-  .menu-btn{display:grid;place-items:center;z-index:60;position:relative}
+  .nav-links a{
+    color:var(--ink);text-shadow:none;
+    font-size:1.5rem;font-weight:600;
+    font-family:'Space Grotesk','Inter',sans-serif;
+    letter-spacing:-.01em;
+  }
+  .menu-btn{display:grid;place-items:center;z-index:60;position:relative;color:#fff;transition:color .2s}
+  header.scrolled .menu-btn,
+  body.menu-open .menu-btn{color:var(--ink)}
   .phone-link span.txt{display:none}
   .nav-cta .btn{display:none}
 }
 @media (max-width:560px){
   .container{padding:0 22px}
   .row-2{grid-template-columns:1fr}
-  .projects-grid{grid-template-columns:1fr}
   .services-grid{grid-template-columns:1fr}
   .about-stats{grid-template-columns:1fr;gap:12px}
   .stat{padding:18px}
@@ -597,6 +642,7 @@ footer{
     </div>
   </div>
 </header>
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <a id="top"></a>
 
@@ -766,6 +812,14 @@ footer{
       <p class="subhead">Real homes from across Northeast Ohio. Click any image for a closer look.</p>
     </div>
     <div class="projects-grid" id="projectsGrid"></div>
+    <div class="projects-controls">
+      <button class="projects-prev" aria-label="Previous projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="projects-next" aria-label="Next projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -959,8 +1013,16 @@ window.addEventListener('scroll', onScroll, {passive:true});
 // mobile menu
 const mb = document.getElementById('menuBtn');
 const nl = document.getElementById('navLinks');
-mb.addEventListener('click', () => nl.classList.toggle('open'));
-nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
+const nbd = document.getElementById('navBackdrop');
+function setMenu(open){
+  nl.classList.toggle('open', open);
+  nbd.classList.toggle('open', open);
+  document.body.classList.toggle('menu-open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+mb.addEventListener('click', () => setMenu(!nl.classList.contains('open')));
+nbd.addEventListener('click', () => setMenu(false));
+nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
 // reveal on scroll
 const io = new IntersectionObserver((entries) => {
@@ -1012,6 +1074,19 @@ projects.forEach((p, i) => {
   el.addEventListener('click', () => openLightbox(i));
   grid.appendChild(el);
   io.observe(el);
+});
+
+// projects rail nav
+const railStep = () => {
+  const card = grid.querySelector('.project');
+  if (!card) return grid.clientWidth * 0.85;
+  return card.getBoundingClientRect().width + 24; // card width + gap
+};
+document.querySelector('.projects-prev').addEventListener('click', () => {
+  grid.scrollBy({ left: -railStep(), behavior: 'smooth' });
+});
+document.querySelector('.projects-next').addEventListener('click', () => {
+  grid.scrollBy({ left: railStep(), behavior: 'smooth' });
 });
 
 // lightbox
