@@ -111,15 +111,15 @@ header.scrolled{
   -webkit-backdrop-filter:saturate(150%) blur(16px);
   border-bottom-color:rgba(15,27,45,.08);
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:108px;transition:height .3s}
-header.scrolled .nav{height:88px}
+.nav{display:flex;align-items:center;justify-content:space-between;height:140px;transition:height .3s}
+header.scrolled .nav{height:108px}
 .brand{display:flex;align-items:center;color:var(--ink)}
 .brand-logo{
-  height:84px;width:auto;
-  filter:drop-shadow(0 4px 14px rgba(0,0,0,.35));
+  height:116px;width:auto;
+  filter:drop-shadow(0 4px 18px rgba(0,0,0,.4));
   transition:filter .3s,height .3s;
 }
-header.scrolled .brand-logo{height:64px;filter:none}
+header.scrolled .brand-logo{height:84px;filter:none}
 .nav-links{display:flex;gap:38px;align-items:center}
 .nav-links a{
   color:#fff;font-weight:500;font-size:.96rem;
@@ -152,10 +152,13 @@ header.scrolled .menu-btn{color:var(--ink)}
   position:absolute;inset:0;overflow:hidden;
   background:#0E1726 url('https://i.vimeocdn.com/video/1975692414-702cf750c9b5b07096cbb57b51db20ef505f759ec4d4f9c57e4bad9083bf8a13-d_1920x1080?&r=pad&region=us') center 30%/cover no-repeat;
 }
+/* The Vimeo source is a vertical 9:16 clip. To always fill the viewport
+   edge-to-edge on desktop we size it off the LONGEST viewport dimension
+   and let the other axis overflow. The iframe is clipped by .hero-bg. */
 .hero-bg iframe{
   position:absolute;top:50%;left:50%;
-  width:100vw;height:56.25vw; /* 16:9 */
-  min-height:100vh;min-width:177.78vh;
+  width:max(100vw, calc(100vh * 9 / 16));
+  height:max(100vh, calc(100vw * 16 / 9));
   transform:translate(-50%,-50%);
   border:0;pointer-events:none;
 }
@@ -603,58 +606,6 @@ footer{
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="container">
-    <div class="section-head center reveal">
-      <span class="eyebrow">What we do</span>
-      <h2>Services that cover your whole home.</h2>
-      <p class="subhead">Inside or out, big job or small — we treat every project with the same care.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service reveal">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
-        <h3>Interior &amp; Exterior Painting</h3>
-        <p>Walls, trim, ceilings, doors, full exteriors. Clean lines, smooth finishes, and color that holds up.</p>
-      </div>
-      <div class="service reveal delay-1">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></div>
-        <h3>Deck Staining &amp; Repair</h3>
-        <p>Pressure wash, sand, board replacement, and a flawless application of stain that brings tired decks back to life.</p>
-      </div>
-      <div class="service reveal delay-2">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
-        <h3>Siding &amp; Trim Repair</h3>
-        <p>Fallen siding, rotted trim, weather damage. We repair and refinish so the new paint actually lasts.</p>
-      </div>
-      <div class="service reveal delay-3">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M8 8c0 2 4 4 4 8s-4 6-4 6"/><path d="M16 8c0 2-4 4-4 8s4 6 4 6"/></svg></div>
-        <h3>Pressure Washing</h3>
-        <p>Houses, decks, walkways, and fences — restored to their best before paint, stain, or just because.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECT GALLERY -->
-<section id="projects">
-  <div class="container">
-    <div class="section-head center reveal">
-      <span class="eyebrow">Before &amp; after</span>
-      <h2>Showcase of our exceptional projects.</h2>
-      <p class="subhead">Real homes from across Northeast Ohio. Click any image for a closer look.</p>
-    </div>
-    <div class="projects-grid" id="projectsGrid"></div>
-  </div>
-</section>
-
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <button class="lb-close" aria-label="Close">×</button>
-  <button class="lb-prev" aria-label="Previous">‹</button>
-  <button class="lb-next" aria-label="Next">›</button>
-  <img id="lightboxImg" alt="">
-</div>
-
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="container">
@@ -721,6 +672,59 @@ footer{
     </div>
   </div>
 </section>
+
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">What we do</span>
+      <h2>Services that cover your whole home.</h2>
+      <p class="subhead">Inside or out, big job or small — we treat every project with the same care.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service reveal">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
+        <h3>Interior &amp; Exterior Painting</h3>
+        <p>Walls, trim, ceilings, doors, full exteriors. Clean lines, smooth finishes, and color that holds up.</p>
+      </div>
+      <div class="service reveal delay-1">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></div>
+        <h3>Deck Staining &amp; Repair</h3>
+        <p>Pressure wash, sand, board replacement, and a flawless application of stain that brings tired decks back to life.</p>
+      </div>
+      <div class="service reveal delay-2">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
+        <h3>Siding &amp; Trim Repair</h3>
+        <p>Fallen siding, rotted trim, weather damage. We repair and refinish so the new paint actually lasts.</p>
+      </div>
+      <div class="service reveal delay-3">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M8 8c0 2 4 4 4 8s-4 6-4 6"/><path d="M16 8c0 2-4 4-4 8s4 6 4 6"/></svg></div>
+        <h3>Pressure Washing</h3>
+        <p>Houses, decks, walkways, and fences — restored to their best before paint, stain, or just because.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT GALLERY -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Before &amp; after</span>
+      <h2>Showcase of our exceptional projects.</h2>
+      <p class="subhead">Real homes from across Northeast Ohio. Click any image for a closer look.</p>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">×</button>
+  <button class="lb-prev" aria-label="Previous">‹</button>
+  <button class="lb-next" aria-label="Next">›</button>
+  <img id="lightboxImg" alt="">
+</div>
 
 <!-- SERVICE AREA -->
 <section id="area">
