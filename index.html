@@ -81,23 +81,42 @@ p{margin:0 0 1em}
   font-weight:600;margin-bottom:14px;
 }
 .btn{
+  --btn-color:var(--accent);
   display:inline-flex;align-items:center;gap:10px;
-  background:var(--accent);color:#fff;font-weight:600;
+  background:var(--btn-color);color:#fff;font-weight:600;
   padding:16px 28px;border-radius:999px;border:none;cursor:pointer;
   font-size:.96rem;transition:transform .25s,background .25s,box-shadow .25s;
   box-shadow:0 14px 30px -12px rgba(40,165,254,.55);
   letter-spacing:.01em;
+  position:relative;overflow:visible;
 }
-.btn:hover{background:var(--accent-2);transform:translateY(-2px)}
+/* subtle wet-paint drips hanging from the button */
+.btn::after{
+  content:"";
+  position:absolute;left:0;right:0;top:100%;
+  height:18px;pointer-events:none;
+  background:
+    radial-gradient(ellipse 4px 7px at 15% 0,  var(--btn-color) 99%, transparent 100%),
+    radial-gradient(ellipse 6px 11px at 38% 0, var(--btn-color) 99%, transparent 100%),
+    radial-gradient(ellipse 4px 6px at 58% 0,  var(--btn-color) 99%, transparent 100%),
+    radial-gradient(ellipse 5px 9px at 78% 0,  var(--btn-color) 99%, transparent 100%),
+    radial-gradient(ellipse 3px 5px at 90% 0,  var(--btn-color) 99%, transparent 100%);
+  background-repeat:no-repeat;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.18));
+  transition:transform .35s ease;
+}
+.btn:hover::after{transform:translateY(2px)}
+.btn:hover{background:var(--accent-2);--btn-color:var(--accent-2);transform:translateY(-2px)}
 .btn.ghost{
   background:transparent;color:var(--ink);border:1.5px solid currentColor;
   box-shadow:none;
 }
+.btn.ghost::after{display:none}
 .btn.ghost.light{color:#fff}
 .btn.ghost:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 .btn.ghost.light:hover{background:#fff;color:var(--ink);border-color:#fff}
-.btn.dark{background:var(--ink);box-shadow:0 14px 30px -12px rgba(15,27,45,.6)}
-.btn.dark:hover{background:var(--ink-2)}
+.btn.dark{background:var(--ink);--btn-color:var(--ink);box-shadow:0 14px 30px -12px rgba(15,27,45,.6)}
+.btn.dark:hover{background:var(--ink-2);--btn-color:var(--ink-2)}
 
 /* HEADER */
 header{
@@ -111,15 +130,15 @@ header.scrolled{
   -webkit-backdrop-filter:saturate(150%) blur(16px);
   border-bottom-color:rgba(15,27,45,.08);
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:140px;transition:height .3s}
-header.scrolled .nav{height:108px}
+.nav{display:flex;align-items:center;justify-content:space-between;height:168px;transition:height .3s}
+header.scrolled .nav{height:128px}
 .brand{display:flex;align-items:center;color:var(--ink)}
 .brand-logo{
-  height:116px;width:auto;
-  filter:drop-shadow(0 4px 18px rgba(0,0,0,.4));
+  height:144px;width:auto;
+  filter:drop-shadow(0 4px 22px rgba(0,0,0,.45));
   transition:filter .3s,height .3s;
 }
-header.scrolled .brand-logo{height:84px;filter:none}
+header.scrolled .brand-logo{height:104px;filter:none}
 .nav-links{display:flex;gap:38px;align-items:center}
 .nav-links a{
   color:#fff;font-weight:500;font-size:.96rem;
@@ -189,7 +208,18 @@ header.scrolled .menu-btn{color:var(--ink)}
   text-shadow:0 2px 16px rgba(0,0,0,.4);
   font-weight:400;
 }
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.hero-rating{
+  display:inline-flex;align-items:center;gap:12px;
+  margin:-12px 0 30px;
+}
+.hero-stars{display:inline-flex;gap:3px;color:var(--gold)}
+.hero-stars svg{width:18px;height:18px;filter:drop-shadow(0 1px 4px rgba(0,0,0,.4))}
+.hero-rating-text{
+  color:#E8EAEF;font-size:.9rem;letter-spacing:.01em;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.hero-rating-text strong{color:#fff;font-weight:600;margin-right:2px}
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
   background:rgba(255,255,255,.12);
@@ -570,6 +600,16 @@ footer{
       <span class="hero-eyebrow"><span class="dot"></span>Chagrin Falls · Northeast Ohio</span>
       <h1>Transform your space<br><span class="accent">with beautiful colors.</span></h1>
       <p class="lead">Quality painting solutions for residential and commercial projects. Family-owned and built on craftsmanship — for over a decade.</p>
+      <div class="hero-rating">
+        <div class="hero-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span class="hero-rating-text"><strong>5.0</strong> from neighbors on Nextdoor</span>
+      </div>
       <div class="hero-ctas">
         <a href="#contact" class="btn">Get a Free Estimate
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
