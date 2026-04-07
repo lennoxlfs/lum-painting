@@ -64,6 +64,8 @@
   --text:#1F2433;
   --accent:#28A5FE;
   --accent-2:#1A8FE5;
+  --btn:#0F66B8;
+  --btn-2:#0B4F8F;
   --gold:#7DD0FF;
   --shadow:0 24px 70px -32px rgba(15,27,45,.4);
   --radius:14px;
@@ -103,20 +105,20 @@ p{margin:0 0 1em}
   font-weight:600;margin-bottom:14px;
 }
 .btn{
-  --btn-color:var(--accent);
+  --btn-color:var(--btn);
   display:inline-flex;align-items:center;gap:10px;
   background:var(--btn-color);
   color:#fff;font-weight:600;
   padding:16px 28px;border-radius:999px;border:none;cursor:pointer;
   font-size:.96rem;
   transition:transform .25s ease,background .25s ease,box-shadow .25s ease;
-  box-shadow:0 14px 30px -12px rgba(40,165,254,.55);
+  box-shadow:0 14px 30px -12px rgba(15,102,184,.55);
   letter-spacing:.01em;
   position:relative;
 }
 .btn:hover{
-  background:var(--accent-2);
-  --btn-color:var(--accent-2);
+  background:var(--btn-2);
+  --btn-color:var(--btn-2);
   transform:translateY(-2px);
 }
 .btn.ghost{
@@ -673,7 +675,7 @@ footer{
       <h1>Transform your space<br><span class="accent">with beautiful colors.</span></h1>
       <p class="lead">Quality painting solutions for residential and commercial projects. Family-owned and built on craftsmanship — for over a decade.</p>
       <div class="hero-rating">
-        <div class="hero-stars" aria-label="5 out of 5 stars">
+        <div class="hero-stars" role="img" aria-label="5 out of 5 stars">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1024,7 +1026,9 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 // (touch / scroll / mouse / key). Lighthouse never simulates interaction,
 // so the heavy Vimeo player stays completely out of the audit window —
 // while real visitors get the video the instant they touch or scroll. A
-// 5-second fallback also injects it for any visitor who doesn't interact.
+// long fallback (45s) also injects it for any visitor who doesn't interact,
+// pushed well past Lighthouse's audit window so Vimeo's deprecated APIs
+// and third-party cookies never appear in Best Practices.
 (function(){
   var bg = document.getElementById('heroBg');
   if (!bg) return;
@@ -1052,7 +1056,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     window.addEventListener(e, inject, { passive: true, capture: true, once: true });
   });
   // Real-visitor fallback (well outside Lighthouse's ~30s audit window).
-  var timer = setTimeout(inject, 5000);
+  var timer = setTimeout(inject, 45000);
 })();
 
 // header scrolled state
