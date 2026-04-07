@@ -157,22 +157,33 @@ header.scrolled .menu-btn{color:var(--ink)}
 
 /* HERO */
 .hero{
-  position:relative;height:100vh;min-height:680px;max-height:1100px;
+  position:relative;
+  height:100vh;height:100dvh;
+  min-height:680px;max-height:1100px;
   overflow:hidden;color:#fff;display:flex;align-items:center;
 }
 .hero-bg{
   position:absolute;inset:0;overflow:hidden;
   background:#0E1726 url('https://i.vimeocdn.com/video/1975692414-702cf750c9b5b07096cbb57b51db20ef505f759ec4d4f9c57e4bad9083bf8a13-d_1920x1080?&r=pad&region=us') center 30%/cover no-repeat;
 }
-/* The Vimeo source is a vertical 9:16 clip. To always fill the viewport
-   edge-to-edge on desktop we size it off the LONGEST viewport dimension
-   and let the other axis overflow. The iframe is clipped by .hero-bg. */
+/* The Vimeo source is a vertical 9:16 clip. Use the classic cover trick:
+   start at the video's natural aspect, then bump min-width/min-height to
+   100% so the iframe always fully covers .hero-bg on every viewport. */
 .hero-bg iframe{
   position:absolute;top:50%;left:50%;
-  width:max(100vw, calc(100vh * 9 / 16));
-  height:max(100vh, calc(100vw * 16 / 9));
+  width:56.25vh;          /* 9/16 of viewport height */
+  height:100vh;
+  height:100dvh;
+  min-width:100vw;
+  min-height:177.78vw;    /* 16/9 of viewport width */
   transform:translate(-50%,-50%);
   border:0;pointer-events:none;
+}
+@supports (height:100dvh){
+  .hero-bg iframe{
+    width:56.25dvh;
+    min-height:177.78vw;
+  }
 }
 .hero-bg::after{
   content:"";position:absolute;inset:0;
@@ -517,7 +528,7 @@ footer{
   .reviews-grid{grid-template-columns:1fr;max-width:600px;margin:0 auto}
 }
 @media (max-width:880px){
-  .hero{min-height:560px}
+  .hero{min-height:560px;height:100vh;height:100dvh}
   .about-grid{grid-template-columns:1fr;gap:50px}
   .about-img-2{display:none}
   .area-grid{grid-template-columns:1fr;gap:36px}
@@ -548,7 +559,7 @@ footer{
   .stat{padding:18px}
   .contact-card,.contact-form{padding:32px 26px}
   .foot-grid{grid-template-columns:1fr;gap:28px}
-  .hero{min-height:540px;height:90vh}
+  .hero{min-height:540px;height:100vh;height:100dvh}
   .hero-eyebrow{font-size:.7rem;padding:6px 14px}
 }
 </style>
