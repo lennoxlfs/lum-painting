@@ -8,8 +8,7 @@
 <meta name="theme-color" content="#0F1B2D" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="format-detection" content="telephone=no" />
-<link rel="dns-prefetch" href="https://player.vimeo.com" />
-<link rel="dns-prefetch" href="https://i.vimeocdn.com" />
+<link rel="preload" as="image" href="hero-poster.jpg" />
 <link rel="dns-prefetch" href="https://img1.wsimg.com" />
 <link rel="preconnect" href="https://img1.wsimg.com" crossorigin />
 <link rel="canonical" href="https://lumpainting.com/" />
@@ -190,24 +189,11 @@ header.scrolled .menu-btn{color:var(--ink)}
   position:absolute;inset:0;overflow:hidden;
   background:#0E1726 center/cover no-repeat;
 }
-/* The Vimeo source is a vertical 9:16 clip. We size the iframe to always
-   cover the hero box: width is the larger of 100vw or (100dvh * 9/16),
-   height is the larger of 100dvh or (100vw * 16/9). The longer axis
-   overflows and is clipped by .hero-bg{overflow:hidden}. Using explicit
-   max() on BOTH width and height because iframes don't honor min-* the
-   way block elements do. */
-.hero-bg iframe{
-  position:absolute;top:50%;left:50%;
-  width:max(100vw, calc(100vh * 9 / 16));
-  height:max(100vh, calc(100vw * 16 / 9));
-  transform:translate(-50%,-50%);
-  border:0;pointer-events:none;
-}
-@supports (height:100dvh){
-  .hero-bg iframe{
-    width:max(100vw, calc(100dvh * 9 / 16));
-    height:max(100dvh, calc(100vw * 16 / 9));
-  }
+.hero-bg video{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  pointer-events:none;
 }
 .hero-bg::after{
   content:"";position:absolute;inset:0;pointer-events:none;
@@ -668,7 +654,11 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg" data-video="https://player.vimeo.com/video/1050975241?h=2950c131aa&background=1&autoplay=1&loop=1&autopause=0&muted=1&title=0&byline=0&portrait=0&controls=0&playsinline=1"></div>
+  <div class="hero-bg" id="heroBg">
+    <video autoplay loop muted playsinline poster="hero-poster.jpg" aria-hidden="true">
+      <source src="hero-bg.mp4" type="video/mp4" />
+    </video>
+  </div>
   <div class="hero-content">
     <div class="container">
       <span class="hero-eyebrow"><span class="dot"></span>Chagrin Falls · Northeast Ohio</span>
@@ -1032,67 +1022,9 @@ footer{
 // year
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-// Background video loading strategy:
-// - Real visitors: inject the Vimeo iframe ~1.2s after the page is interactive
-//   so the hero text/CTA paint instantly and the video fades in right after.
-// - Lighthouse / PageSpeed audits: detect via user-agent and SKIP the iframe
-//   entirely so the ~1MB Vimeo player, its deprecated APIs, third-party
-//   cookies, and X-Frame-Options analytics frame never enter the audit window.
-// - User-input events (tap, click, key) act as a safety trigger so even if
-//   the idle injection were ever delayed, the very first interaction loads
-//   the video instantly.
-(function(){
-  var bg = document.getElementById('heroBg');
-  if (!bg) return;
-  var src = bg.dataset.video;
-  var injected = false;
-
-  function inject(){
-    if (injected) return;
-    injected = true;
-    var f = document.createElement('iframe');
-    f.src = src;
-    f.title = 'Lum Painting deck staining background video';
-    f.setAttribute('allow', 'autoplay; fullscreen');
-    f.setAttribute('allowfullscreen', '');
-    f.setAttribute('aria-hidden', 'true');
-    f.setAttribute('tabindex', '-1');
-    bg.appendChild(f);
-    cleanup();
-  }
-
-  // Safety trigger: any true user input loads the video immediately.
-  // No scroll/wheel/mousemove because Lighthouse simulates scroll.
-  var events = ['pointerdown','touchstart','click','keydown'];
-  function cleanup(){
-    events.forEach(function(e){ window.removeEventListener(e, inject, true); });
-  }
-  events.forEach(function(e){
-    window.addEventListener(e, inject, { passive: true, capture: true, once: true });
-  });
-
-  // Detect Lighthouse / PageSpeed Insights and bail out completely.
-  // Lighthouse always identifies itself in the UA string with "Chrome-Lighthouse".
-  var ua = navigator.userAgent || '';
-  var isLighthouse = /Chrome-Lighthouse|Lighthouse|HeadlessChrome/i.test(ua);
-  if (isLighthouse) return;
-
-  // Real visitors: schedule the iframe right after first paint + a short
-  // breath so it never competes with LCP. requestIdleCallback when available
-  // gives the browser room to finish layout/paint first.
-  function scheduleAutoLoad(){
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(inject, { timeout: 2500 });
-    } else {
-      setTimeout(inject, 1200);
-    }
-  }
-  if (document.readyState === 'complete') {
-    scheduleAutoLoad();
-  } else {
-    window.addEventListener('load', scheduleAutoLoad, { once: true });
-  }
-})();
+// Hero video: native <video> element autoplays with muted+playsinline.
+// No iframe injection needed — the browser handles loading natively.
+// Poster image shows immediately while the MP4 streams in.
 
 // header scrolled state
 const hdr = document.getElementById('header');
