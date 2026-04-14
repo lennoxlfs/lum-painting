@@ -1,0 +1,14 @@
+{
+  "name": "lum-painting",
+  "version": "1.0.0",
+  "description": "Family-owned painting company in Chagrin Falls, OH",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build required'",
+    "lint": "echo 'No linting configured for static HTML'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
