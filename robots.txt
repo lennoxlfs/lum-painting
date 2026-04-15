@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# AI search crawlers (explicit allow)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://lumpainting.com/sitemap.xml

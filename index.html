@@ -36,7 +36,25 @@
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
+  "@graph":[
+  {
+    "@type":"WebSite",
+    "@id":"https://lumpainting.com/#website",
+    "url":"https://lumpainting.com/",
+    "name":"Lum Painting",
+    "publisher":{"@id":"https://lumpainting.com/#org"}
+  },
+  {
+    "@type":"Organization",
+    "@id":"https://lumpainting.com/#org",
+    "name":"Lum Painting",
+    "url":"https://lumpainting.com/",
+    "logo":"https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/e5acc5c8-7248-457b-a4e3-a5f2142d222f-removebg-.png/:/rs=w:400,cg:true,m/qt=q:95",
+    "sameAs":["https://www.facebook.com/931132860086600","https://nextdoor.com/page/lfs-painting-chagrin-falls-oh-1"]
+  },
+  {
   "@type":"PaintingContractor",
+  "@id":"https://lumpainting.com/#business",
   "name":"Lum Painting",
   "image":"https://img1.wsimg.com/isteam/ip/3e070c96-9c7f-411e-8856-0ba13729ba56/6A8F8199-087D-4051-A6ED-800C483B8186.png",
   "url":"https://lumpainting.com/",
@@ -48,7 +66,19 @@
   "description":"Family-owned painting company in Chagrin Falls, OH. Interior and exterior painting, deck staining and repair, siding and trim repair, and pressure washing throughout Northeast Ohio.",
   "founder":[{"@type":"Person","name":"Garrett Lum"},{"@type":"Person","name":"Warren Lum"}],
   "sameAs":["https://www.facebook.com/931132860086600","https://nextdoor.com/page/lfs-painting-chagrin-falls-oh-1"],
-  "aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"3"}
+  "aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"3"},
+  "hasOfferCatalog":{
+    "@type":"OfferCatalog",
+    "name":"Painting Services",
+    "itemListElement":[
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Interior & Exterior Painting","areaServed":"Northeast Ohio","provider":{"@id":"https://lumpainting.com/#business"}}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Deck Staining & Repair","areaServed":"Northeast Ohio","provider":{"@id":"https://lumpainting.com/#business"}}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Siding & Trim Repair","areaServed":"Northeast Ohio","provider":{"@id":"https://lumpainting.com/#business"}}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Pressure Washing","areaServed":"Northeast Ohio","provider":{"@id":"https://lumpainting.com/#business"}}}
+    ]
+  }
+  }
+  ]
 }
 </script>
 
@@ -1154,5 +1184,39 @@ if (new URLSearchParams(location.search).get('sent') === '1') {
 </script>
 <!-- Vercel Web Analytics -->
 <script defer src="/_vercel/insights/script.js"></script>
+<!-- Vercel Speed Insights -->
+<script defer src="/_vercel/speed-insights/script.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-43108TM6XK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-43108TM6XK');
+
+  // LFS key events
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href') || '';
+    if(href.startsWith('tel:')){
+      gtag('event','call_click',{event_category:'engagement',phone:href.replace('tel:','')});
+    } else if(href.startsWith('mailto:')){
+      gtag('event','email_click',{event_category:'engagement'});
+    } else if(/google\.com\/maps|maps\.app\.goo\.gl|goo\.gl\/maps/i.test(href)){
+      gtag('event','directions_click',{event_category:'engagement'});
+    } else if(/^https?:\/\//i.test(href) && !/lumpainting\.com/i.test(href)){
+      gtag('event','outbound_click',{event_category:'outbound',link_url:href});
+    }
+  });
+  document.addEventListener('submit', function(e){
+    if(e.target && e.target.tagName === 'FORM'){
+      gtag('event','form_submit',{event_category:'lead',form_id:e.target.id||'quote_form'});
+    }
+  });
+  if (new URLSearchParams(location.search).get('sent') === '1') {
+    gtag('event','generate_lead',{event_category:'lead',method:'quote_form'});
+  }
+</script>
 </body>
 </html>
